@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RecipeService } from '../../service/recipe.service'; // 👈 à importer
 import { HttpClientModule } from '@angular/common/http';
+import { NgChartsModule } from 'ng2-charts';
 
 @Component({
   selector: 'app-recipe-form',
   standalone: true,
-  imports: [CommonModule, FormsModule,HttpClientModule],
+  imports: [CommonModule, FormsModule,HttpClientModule,NgChartsModule],
   templateUrl: './recipe-form.component.html',
   styleUrl: './recipe-form.component.css'
 })
@@ -111,4 +112,14 @@ export class RecipeFormComponent {
     };
     return names[key] || key;
   }
+  getMacrosData(macros: any) {
+  return {
+    labels: ['Protéines', 'Glucides', 'Lipides'],
+    datasets: [{
+      data: [macros.protein, macros.carbs, macros.fat],
+      backgroundColor: ['#4CAF50', '#2196F3', '#FF9800']
+    }]
+  };
+}
+
 }

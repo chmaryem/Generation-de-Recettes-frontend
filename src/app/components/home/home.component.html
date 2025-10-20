@@ -1,0 +1,290 @@
+<div class="landing-container">
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-content">
+      <div class="nav-logo">
+        <span class="logo-icon">👨‍🍳</span>
+        <span class="logo-text">RecipeAI</span>
+      </div>
+      <div class="nav-links">
+        <a (click)="scrollToSection('features')" class="nav-link">Fonctionnalités</a>
+        <a (click)="scrollToSection('how-it-works')" class="nav-link">Comment ça marche</a>
+        <a (click)="scrollToSection('testimonials')" class="nav-link">Témoignages</a>
+        <button class="btn-nav-cta" (click)="navigateToGenerator()">
+          Commencer
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="badge-icon">✨</span>
+          Propulsé par l'Intelligence Artificielle
+        </div>
+        <h1 class="hero-title">
+          Transformez vos ingrédients en
+          <span class="gradient-text">chefs-d'œuvre culinaires</span>
+        </h1>
+        <p class="hero-description">
+          Générez instantanément 3 recettes personnalisées adaptées à vos contraintes alimentaires.
+          Simple, créatif ou express : choisissez votre style !
+        </p>
+        <div class="hero-cta">
+          <button class="btn-primary" (click)="navigateToGenerator()">
+            <span class="btn-icon">🚀</span>
+            Créer ma première recette
+          </button>
+          <button class="btn-secondary" (click)="scrollToSection('how-it-works')">
+            <span class="btn-icon">▶️</span>
+            Voir comment ça marche
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-item" *ngFor="let stat of stats">
+            <div class="stat-value">{{ stat.value }}</div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card card-1">
+          <div class="card-emoji">🍝</div>
+          <div class="card-text">Pâtes Carbonara</div>
+        </div>
+        <div class="floating-card card-2">
+          <div class="card-emoji">🥗</div>
+          <div class="card-text">Buddha Bowl</div>
+        </div>
+        <div class="floating-card card-3">
+          <div class="card-emoji">🍜</div>
+          <div class="card-text">Ramen Express</div>
+        </div>
+        <div class="hero-circle circle-1"></div>
+        <div class="hero-circle circle-2"></div>
+        <div class="hero-circle circle-3"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">Nos Solutions</span>
+        <h2 class="section-title">3 types de recettes pour tous vos besoins</h2>
+        <p class="section-subtitle">
+          Une recette adaptée à chaque moment de votre journée
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card" *ngFor="let feature of features; let i = index"
+             [style.animation-delay.ms]="i * 100">
+          <div class="feature-icon" [style.background]="feature.color + '20'">
+            <span [style.color]="feature.color">{{ feature.icon }}</span>
+          </div>
+          <h3 class="feature-title">{{ feature.title }}</h3>
+          <p class="feature-description">{{ feature.description }}</p>
+          <div class="feature-line" [style.background]="feature.color"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Constraints Section -->
+  <section class="constraints-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">Personnalisation</span>
+        <h2 class="section-title">Respectez toutes vos contraintes alimentaires</h2>
+      </div>
+
+      <div class="constraints-showcase">
+        <div class="constraint-chip" *ngFor="let constraint of constraints; let i = index"
+             [style.animation-delay.ms]="i * 80">
+          <span class="chip-icon">{{ constraint.icon }}</span>
+          <span class="chip-label">{{ constraint.label }}</span>
+        </div>
+      </div>
+
+      <div class="constraints-visual">
+        <div class="visual-box">
+          <div class="visual-icon">🎯</div>
+          <h3>Objectifs Nutritionnels</h3>
+          <p>Perte de poids, gain musculaire, alimentation équilibrée...</p>
+        </div>
+        <div class="visual-box">
+          <div class="visual-icon">⏱️</div>
+          <h3>Temps Personnalisé</h3>
+          <p>De 5 à 120 minutes selon votre disponibilité</p>
+        </div>
+        <div class="visual-box">
+          <div class="visual-icon">🔧</div>
+          <h3>Matériel Adapté</h3>
+          <p>Recettes selon vos équipements disponibles</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">Simplicité</span>
+        <h2 class="section-title">Comment ça marche ?</h2>
+        <p class="section-subtitle">4 étapes pour vos recettes personnalisées</p>
+      </div>
+
+      <div class="steps-timeline">
+        <div class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3 class="step-title">Ajoutez vos ingrédients</h3>
+            <p class="step-description">
+              Listez simplement ce que vous avez dans votre frigo
+            </p>
+          </div>
+          <div class="step-icon">🛒</div>
+        </div>
+
+        <div class="step-connector"></div>
+
+        <div class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3 class="step-title">Définissez vos contraintes</h3>
+            <p class="step-description">
+              Sélectionnez vos préférences et restrictions alimentaires
+            </p>
+          </div>
+          <div class="step-icon">🏷️</div>
+        </div>
+
+        <div class="step-connector"></div>
+
+        <div class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3 class="step-title">L'IA génère vos recettes</h3>
+            <p class="step-description">
+              Notre intelligence artificielle crée 3 recettes sur mesure
+            </p>
+          </div>
+          <div class="step-icon">🤖</div>
+        </div>
+
+        <div class="step-connector"></div>
+
+        <div class="step-item">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3 class="step-title">Cuisinez et régalez-vous !</h3>
+            <p class="step-description">
+              Suivez les étapes détaillées et profitez du résultat
+            </p>
+          </div>
+          <div class="step-icon">👨‍🍳</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials-section">
+    <div class="section-container">
+      <div class="section-header">
+        <span class="section-badge">Témoignages</span>
+        <h2 class="section-title">Ce que disent nos utilisateurs</h2>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let testimonial of testimonials; let i = index"
+             [style.animation-delay.ms]="i * 150">
+          <div class="testimonial-header">
+            <div class="testimonial-avatar">{{ testimonial.avatar }}</div>
+            <div class="testimonial-info">
+              <h4 class="testimonial-name">{{ testimonial.name }}</h4>
+              <div class="testimonial-rating">
+                <span *ngFor="let star of [1,2,3,4,5]" class="star">⭐</span>
+              </div>
+            </div>
+          </div>
+          <p class="testimonial-text">"{{ testimonial.text }}"</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="cta-content">
+      <h2 class="cta-title">Prêt à révolutionner votre cuisine ?</h2>
+      <p class="cta-description">
+        Rejoignez des milliers d'utilisateurs qui ont transformé leur façon de cuisiner
+      </p>
+      <button class="btn-cta-large" (click)="navigateToGenerator()">
+        <span class="btn-icon">✨</span>
+        Commencer gratuitement
+      </button>
+      <p class="cta-note">Aucune inscription requise • 100% gratuit</p>
+    </div>
+    <div class="cta-decoration">
+      <div class="decoration-circle circle-1"></div>
+      <div class="decoration-circle circle-2"></div>
+      <div class="decoration-circle circle-3"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="footer-logo">
+          <span class="logo-icon">👨‍🍳</span>
+          <span class="logo-text">RecipeAI</span>
+        </div>
+        <p class="footer-description">
+          Votre assistant culinaire intelligent propulsé par l'IA
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">Navigation</h4>
+        <ul class="footer-links">
+          <li><a (click)="scrollToSection('features')">Fonctionnalités</a></li>
+          <li><a (click)="scrollToSection('how-it-works')">Comment ça marche</a></li>
+          <li><a (click)="scrollToSection('testimonials')">Témoignages</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">Légal</h4>
+        <ul class="footer-links">
+          <li><a href="#">Conditions d'utilisation</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Mentions légales</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4 class="footer-title">Contact</h4>
+        <ul class="footer-links">
+          <li><a href="mailto:contact@recipeai.com">contactrecipeai.com</a></li>
+          <li><a href="#">Support</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2024 RecipeAI. Tous droits réservés.</p>
+      <p>Propulsé par l'Intelligence Artificielle</p>
+    </div>
+  </footer>
+
+</div>

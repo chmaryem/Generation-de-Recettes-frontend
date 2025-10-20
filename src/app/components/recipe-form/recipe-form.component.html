@@ -10,7 +10,7 @@
     </div>
   </header>
 
-  <!-- Medical Disclaimer -->
+  <!-- Disclaimer -->
   <div class="disclaimer">
     <span class="disclaimer-icon">ℹ️</span>
     <p>Les recettes générées sont à titre informatif et culinaire uniquement. Consultez un professionnel de santé pour des conseils nutritionnels personnalisés.</p>
@@ -23,352 +23,181 @@
     <div class="form-section" *ngIf="!showResults">
       <div class="form-card">
         <h2 class="section-title">🥘 Créez votre recette personnalisée</h2>
-
         <form (ngSubmit)="onSubmit()">
 
-          <!-- Ingredients Input -->
+          <!-- Ingredients -->
           <div class="form-group">
-            <label class="form-label">
-              <span class="label-icon">🛒</span>
-              Ingrédients disponibles
-            </label>
+            <label class="form-label">🛒 Ingrédients disponibles</label>
             <div class="ingredient-input-wrapper">
-              <input
-                type="text"
-                class="form-input"
-                [(ngModel)]="currentIngredient"
-                name="currentIngredient"
-                placeholder="Ex: Poulet, Tomates, Riz..."
-                (keyup.enter)="addIngredient()"
-              />
-              <button
-                type="button"
-                class="btn-add"
-                (click)="addIngredient()"
-                [disabled]="!currentIngredient.trim()"
-              >
-                ➕ Ajouter
-              </button>
+              <input type="text" class="form-input" [(ngModel)]="currentIngredient" name="currentIngredient"
+                     placeholder="Ex: Poulet, Tomates, Riz..." (keyup.enter)="addIngredient()"/>
+              <button type="button" class="btn-add" (click)="addIngredient()" [disabled]="!currentIngredient.trim()">➕ Ajouter</button>
             </div>
-
-            <!-- Ingredients Tags -->
             <div class="ingredients-list" *ngIf="ingredients.length > 0">
               <div class="ingredient-tag" *ngFor="let ingredient of ingredients; let i = index">
                 <span>{{ ingredient }}</span>
                 <button type="button" class="remove-btn" (click)="removeIngredient(i)">✕</button>
               </div>
             </div>
-            <p class="helper-text" *ngIf="ingredients.length === 0">
-              Ajoutez au moins un ingrédient pour commencer
-            </p>
+            <p class="helper-text" *ngIf="ingredients.length === 0">Ajoutez au moins un ingrédient pour commencer</p>
           </div>
 
           <!-- Constraints -->
           <div class="form-group">
-            <label class="form-label">
-              <span class="label-icon">🏷️</span>
-              Contraintes alimentaires
-            </label>
+            <label class="form-label">🏷️ Contraintes alimentaires</label>
             <div class="constraints-grid">
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.vegan"
-                  name="vegan"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">🌱</span>
-                  <span class="checkbox-label">Vegan</span>
-                </span>
-              </label>
-
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.halal"
-                  name="halal"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">🕌</span>
-                  <span class="checkbox-label">Halal</span>
-                </span>
-              </label>
-
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.keto"
-                  name="keto"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">🥑</span>
-                  <span class="checkbox-label">Keto</span>
-                </span>
-              </label>
-
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.sansLactose"
-                  name="sansLactose"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">🚫🥛</span>
-                  <span class="checkbox-label">Sans lactose</span>
-                </span>
-              </label>
-
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.sansSucre"
-                  name="sansSucre"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">🚫🍬</span>
-                  <span class="checkbox-label">Sans sucre</span>
-                </span>
-              </label>
-
-              <label class="checkbox-card">
-                <input
-                  type="checkbox"
-                  [(ngModel)]="constraints.richeEnProteines"
-                  name="richeEnProteines"
-                />
-                <span class="checkbox-content">
-                  <span class="checkbox-icon">💪</span>
-                  <span class="checkbox-label">Riche en protéines</span>
-                </span>
-              </label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.vegan" name="vegan"/><span class="checkbox-content">🌱 Vegan</span></label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.halal" name="halal"/><span class="checkbox-content">🕌 Halal</span></label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.keto" name="keto"/><span class="checkbox-content">🥑 Keto</span></label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.sansLactose" name="sansLactose"/><span class="checkbox-content">🚫🥛 Sans lactose</span></label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.sansSucre" name="sansSucre"/><span class="checkbox-content">🚫🍬 Sans sucre</span></label>
+              <label class="checkbox-card"><input type="checkbox" [(ngModel)]="constraints.richeEnProteines" name="richeEnProteines"/><span class="checkbox-content">💪 Riche en protéines</span></label>
             </div>
           </div>
 
-          <!-- Time Constraint -->
+          <!-- Time -->
           <div class="form-group">
-            <label class="form-label">
-              <span class="label-icon">⏱️</span>
-              Temps maximum (minutes)
-            </label>
-            <div class="range-wrapper">
-              <input
-                type="range"
-                class="form-range"
-                [(ngModel)]="maxTime"
-                name="maxTime"
-                min="5"
-                max="120"
-                step="5"
-              />
-              <span class="range-value">{{ maxTime }} min</span>
-            </div>
+            <label class="form-label">⏱️ Temps maximum (minutes)</label>
+            <input type="range" class="form-range" [(ngModel)]="maxTime" name="maxTime" min="5" max="120" step="5"/>
+            <span class="range-value">{{ maxTime }} min</span>
           </div>
 
           <!-- Equipment -->
           <div class="form-group">
-            <label class="form-label">
-              <span class="label-icon">🔧</span>
-              Matériel disponible (optionnel)
-            </label>
-            <input
-              type="text"
-              class="form-input"
-              [(ngModel)]="equipment"
-              name="equipment"
-              placeholder="Ex: Four, Mixeur, Poêle..."
-            />
+            <label class="form-label">🔧 Matériel disponible (optionnel)</label>
+            <input type="text" class="form-input" [(ngModel)]="equipment" name="equipment" placeholder="Ex: Four, Mixeur, Poêle..."/>
           </div>
 
           <!-- Nutritional Goal -->
           <div class="form-group">
-            <label class="form-label">
-              <span class="label-icon">🎯</span>
-              Objectif nutritionnel (optionnel)
-            </label>
-            <textarea
-              class="form-textarea"
-              [(ngModel)]="nutritionalGoal"
-              name="nutritionalGoal"
-              placeholder="Ex: Perdre du poids, Gagner en masse musculaire, Alimentation équilibrée..."
-              rows="3"
-            ></textarea>
+            <label class="form-label">🎯 Objectif nutritionnel (optionnel)</label>
+            <textarea class="form-textarea" [(ngModel)]="nutritionalGoal" name="nutritionalGoal" placeholder="Ex: Perdre du poids, Gagner en masse musculaire..." rows="3"></textarea>
           </div>
 
-          <!-- Submit Button -->
-          <button
-            type="submit"
-            class="btn-submit"
-            [disabled]="ingredients.length === 0 || isLoading"
-          >
+          <!-- Submit -->
+          <button type="submit" class="btn-submit" [disabled]="ingredients.length === 0 || isLoading">
             <span *ngIf="!isLoading">✨ Générer mes recettes</span>
-            <span *ngIf="isLoading" class="loading-spinner">⏳ Génération en cours...</span>
+            <span *ngIf="isLoading">⏳ Génération en cours...</span>
           </button>
         </form>
       </div>
     </div>
 
-    <!-- Results Section -->
-    <div class="results-section" *ngIf="showResults && recipes">
-      <div class="results-header">
-        <h2 class="section-title">🍽️ Vos recettes personnalisées</h2>
-        <button class="btn-new-search" (click)="resetForm()">
-          🔄 Nouvelle recherche
-        </button>
-      </div>
+  <!-- Results Section -->
+<div class="results-section" *ngIf="showResults && recipes">
 
-      <!-- Selected Constraints Summary -->
-      <div class="constraints-summary" *ngIf="getSelectedConstraints().length > 0">
-        <p class="summary-title">Contraintes appliquées :</p>
-        <div class="summary-tags">
-          <span class="summary-tag" *ngFor="let constraint of getSelectedConstraints()">
-            {{ constraint }}
-          </span>
-        </div>
-      </div>
-
-      <!-- Recipe Cards -->
-      <div class="recipes-grid">
-
-        <!-- Simple Recipe -->
-        <div class="recipe-card simple">
-          <div class="card-header">
-            <div class="card-icon">📖</div>
-            <div class="card-type">
-              <span class="type-badge simple-badge">Simple</span>
-              <h3 class="recipe-title">{{ recipes.simple.title }}</h3>
-            </div>
-          </div>
-
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              {{ recipes.simple.time }} min
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">📊</span>
-              {{ recipes.simple.difficulty }}
-            </span>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Ingrédients</h4>
-            <ul class="ingredients-list-card">
-              <li *ngFor="let ingredient of recipes.simple.ingredients">
-                <span class="bullet">•</span> {{ ingredient }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Étapes</h4>
-            <ol class="steps-list">
-              <li *ngFor="let step of recipes.simple.steps; let i = index">
-                <span class="step-number">{{ i + 1 }}</span>
-                <span class="step-text">{{ step }}</span>
-              </li>
-            </ol>
-          </div>
-
-          <div class="card-justification">
-            <div class="justification-icon">💡</div>
-            <p>{{ recipes.simple.justification }}</p>
-          </div>
-        </div>
-
-        <!-- Creative Recipe -->
-        <div class="recipe-card creative">
-          <div class="card-header">
-            <div class="card-icon">🎨</div>
-            <div class="card-type">
-              <span class="type-badge creative-badge">Créative</span>
-              <h3 class="recipe-title">{{ recipes.creative.title }}</h3>
-            </div>
-          </div>
-
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              {{ recipes.creative.time }} min
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">📊</span>
-              {{ recipes.creative.difficulty }}
-            </span>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Ingrédients</h4>
-            <ul class="ingredients-list-card">
-              <li *ngFor="let ingredient of recipes.creative.ingredients">
-                <span class="bullet">•</span> {{ ingredient }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Étapes</h4>
-            <ol class="steps-list">
-              <li *ngFor="let step of recipes.creative.steps; let i = index">
-                <span class="step-number">{{ i + 1 }}</span>
-                <span class="step-text">{{ step }}</span>
-              </li>
-            </ol>
-          </div>
-
-          <div class="card-justification">
-            <div class="justification-icon">💡</div>
-            <p>{{ recipes.creative.justification }}</p>
-          </div>
-        </div>
-
-        <!-- Express Recipe -->
-        <div class="recipe-card express">
-          <div class="card-header">
-            <div class="card-icon">⚡</div>
-            <div class="card-type">
-              <span class="type-badge express-badge">Express</span>
-              <h3 class="recipe-title">{{ recipes.express.title }}</h3>
-            </div>
-          </div>
-
-          <div class="card-meta">
-            <span class="meta-item">
-              <span class="meta-icon">⏱️</span>
-              {{ recipes.express.time }} min
-            </span>
-            <span class="meta-item">
-              <span class="meta-icon">📊</span>
-              {{ recipes.express.difficulty }}
-            </span>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Ingrédients</h4>
-            <ul class="ingredients-list-card">
-              <li *ngFor="let ingredient of recipes.express.ingredients">
-                <span class="bullet">•</span> {{ ingredient }}
-              </li>
-            </ul>
-          </div>
-
-          <div class="card-section">
-            <h4 class="section-subtitle">Étapes</h4>
-            <ol class="steps-list">
-              <li *ngFor="let step of recipes.express.steps; let i = index">
-                <span class="step-number">{{ i + 1 }}</span>
-                <span class="step-text">{{ step }}</span>
-              </li>
-            </ol>
-          </div>
-
-          <div class="card-justification">
-            <div class="justification-icon">💡</div>
-            <p>{{ recipes.express.justification }}</p>
-          </div>
-        </div>
-
-      </div>
+  <!-- Results Header -->
+  <div class="results-header">
+    <div class="header-left">
+      <h2 class="section-title">
+        🍽️ Vos recettes personnalisées
+      </h2>
+      <p class="subtitle-text">3 recettes adaptées à vos besoins</p>
     </div>
+    <button class="btn-new-search" (click)="resetForm()">
+      🔄 Nouvelle recherche
+    </button>
+  </div>
+
+  <!-- Constraints Summary -->
+  <div class="constraints-summary" *ngIf="getSelectedConstraints().length > 0">
+    <p>Contraintes appliquées :</p>
+    <div class="summary-tags">
+      <span class="summary-tag" *ngFor="let constraint of getSelectedConstraints()">
+        {{ constraint }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Recipe Cards Grid -->
+  <div class="recipes-grid">
+    <ng-container *ngFor="let type of ['simple','creative','express']">
+
+      <div class="recipe-card" [ngClass]="type">
+
+        <!-- Card Header -->
+        <div class="card-header">
+          <div class="card-top">
+            <span class="type-badge" [ngClass]="type + '-badge'">
+              <span *ngIf="type === 'simple'">📖 Simple</span>
+              <span *ngIf="type === 'creative'">🎨 Créative</span>
+              <span *ngIf="type === 'express'">⚡ Express</span>
+            </span>
+            <div class="card-icon">
+              {{ type === 'simple' ? '📖' : type === 'creative' ? '🎨' : '⚡' }}
+            </div>
+          </div>
+          <h3 class="recipe-title">{{ recipes[type].title }}</h3>
+          <div class="card-meta">
+            <span class="meta-item">⏱️ {{ recipes[type].time }} min</span>
+            <span class="meta-item">📊 {{ recipes[type].difficulty }}</span>
+          </div>
+        </div>
+
+        <!-- Macros Section -->
+        <div class="macros-section">
+          <h4 class="macros-title">Informations Nutritionnelles</h4>
+          <div class="macros-grid">
+            <div class="macro-item calories-item">
+              <span class="macro-icon">🔥</span>
+              <span class="macro-value">{{ recipes[type].macros.calories }}</span>
+              <span class="macro-label">Calories</span>
+            </div>
+            <div class="macro-item">
+              <span class="macro-icon">🥩</span>
+              <span class="macro-value">{{ recipes[type].macros.protein }}g</span>
+              <span class="macro-label">Protéines</span>
+            </div>
+            <div class="macro-item">
+              <span class="macro-icon">🍚</span>
+              <span class="macro-value">{{ recipes[type].macros.carbs }}g</span>
+              <span class="macro-label">Glucides</span>
+            </div>
+            <div class="macro-item">
+              <span class="macro-icon">🥑</span>
+              <span class="macro-value">{{ recipes[type].macros.fat }}g</span>
+              <span class="macro-label">Lipides</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card Content -->
+        <div class="card-content">
+
+          <!-- Ingredients Section -->
+          <div class="card-section">
+            <h4 class="section-subtitle">Ingrédients</h4>
+            <ul class="ingredients-list-card">
+              <li *ngFor="let ingredient of recipes[type].ingredients">
+                <span class="bullet">•</span> {{ ingredient }}
+              </li>
+            </ul>
+          </div>
+
+          <!-- Steps Section -->
+          <div class="card-section">
+            <h4 class="section-subtitle">Étapes de préparation</h4>
+            <ul class="steps-list">
+              <li *ngFor="let step of recipes[type].steps; let i = index">
+                <span class="step-number">{{ i + 1 }}</span>
+                <span class="step-text">{{ step }}</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Justification -->
+          <div class="card-justification">
+            <span class="justification-text">
+              💡 {{ recipes[type].justification }}
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+    </ng-container>
+  </div>
+</div>
   </div>
 
   <!-- Footer -->
@@ -376,4 +205,3 @@
     <p>Propulsé par l'IA • RecipeAI © 2024</p>
   </footer>
 </div>
-
